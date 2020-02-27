@@ -1,2 +1,4 @@
-# leaflet-challenge
-Homework assignment on Leaflet for data bootcamp
+# Earthquake Map
+
+
+[Layer Options](layers.png)
