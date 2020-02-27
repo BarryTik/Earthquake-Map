@@ -6,7 +6,7 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
     
     var extendedFaults = Object.assign({},lineData);
    
-    for(var i=0; i< 241; i++){
+    for(var i=0; i< 241; i++){  // Object.assign isn't making a copy, hard coded value for now.
 
         var coords = []
         for(var j=0; j< faults["features"][i]["geometry"]["coordinates"].length; j++){
