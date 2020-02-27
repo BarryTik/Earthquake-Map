@@ -1,4 +1,4 @@
 # Earthquake Map
 
 
-[Layer Options](layers.png)
+![Layer Options](layers.png)
