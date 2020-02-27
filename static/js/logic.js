@@ -13,9 +13,7 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
             coords.push([faults["features"][i]["geometry"]["coordinates"][j][0] - 360,faults["features"][i]["geometry"]["coordinates"][j][1]]);
         }
         extendedFaults["features"].push({"type": faults["features"][i]["type"], "properties": faults["features"][i]["properties"], "geometry": {"type": faults["features"][i]["geometry"]["type"], "coordinates": coords}});
-    };
-    console.log(extendedFaults["features"]);
-    
+    };    
     
 
     var faultLines = L.geoJSON(faults);
@@ -66,7 +64,7 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
         }
 
         map = L.map("map", {
-            center: [39.50, -50.00],
+            center: [35, -165],
             zoom: 3,
             layers: [light, faultLines]
         });
@@ -79,8 +77,8 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
             value = value - min;
             max = max - min;
             var weight = value/max;
-            // var desiredColors = {"light": [255, 255, 70], "dark": [71, 71, 21]};
-            var desiredColors = {"light":[255, 255, 70], "dark": [163, 19, 11]}
+            var desiredColors = {"light": [255, 255, 70], "dark": [71, 71, 21]};
+            // var desiredColors = {"light":[255, 255, 70], "dark": [163, 19, 11]};
             var colors = [Math.round(desiredColors["light"][0] - (weight * (desiredColors["light"][0] - desiredColors["dark"][0]))), Math.round(desiredColors["light"][1] - (weight * (desiredColors["light"][1] - desiredColors["dark"][1]))), Math.round(desiredColors["light"][2] - (weight * (desiredColors["light"][2] - desiredColors["dark"][2])))]
             output = "#" + colors[0].toString(16) + colors[1].toString(16) + colors[2].toString(16);
             return output;
@@ -93,6 +91,15 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
 
         for (var i=0; i< data.features.length; i++){
             L.circle([data.features[i].geometry.coordinates[1],data.features[i].geometry.coordinates[0]], {
+                fillOpacity: 0.75,
+                stroke: false,
+                fillColor: colorPicker(data.features[i].properties.mag, extent),
+                radius: (data.features[i].properties.mag - extent[0])*15000
+            }).bindPopup("<b>Magnitude: </b>" + data.features[i].properties.mag + "<br><b>Place:</b> " +
+            data.features[i].properties.place + "<br><b>Time:</b> " + formatTime(data.features[i].properties.time)
+            ).addTo(map);
+
+            L.circle([data.features[i].geometry.coordinates[1],data.features[i].geometry.coordinates[0] - 360], {
                 fillOpacity: 0.75,
                 stroke: false,
                 fillColor: colorPicker(data.features[i].properties.mag, extent),
@@ -139,13 +146,15 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
             return div;
         };
 
-        legend.addTo(map);
-        L.circle([-1.6075, 138.972 - 360], {
-            fillOpacity: 0.75,
-            stroke: false,
-            fillColor: "black",
-            radius: 500000
-        }).bindPopup("TEST").addTo(map);
+        // Debugging Test Circle
+        
+        // legend.addTo(map);
+        // L.circle([35, -165], {
+        //     fillOpacity: 0.75,
+        //     stroke: false,
+        //     fillColor: "black",
+        //     radius: 500000
+        // }).bindPopup("TEST").addTo(map);
         
 
     });
