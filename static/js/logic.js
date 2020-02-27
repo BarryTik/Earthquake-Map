@@ -47,9 +47,9 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     }
 
     map = L.map("map", {
-        center: [39.50, -98.35],
+        center: [39.50, -50.00],
         zoom: 3,
-        layers: [terrain, faultLines]
+        layers: [light, faultLines]
     });
 
     
@@ -60,7 +60,8 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
         value = value - min;
         max = max - min;
         var weight = value/max;
-        var desiredColors = {"light": [255, 255, 70], "dark": [71, 71, 21]};
+        // var desiredColors = {"light": [255, 255, 70], "dark": [71, 71, 21]};
+        var desiredColors = {"light":[255, 255, 70], "dark": [163, 19, 11]}
         var colors = [Math.round(desiredColors["light"][0] - (weight * (desiredColors["light"][0] - desiredColors["dark"][0]))), Math.round(desiredColors["light"][1] - (weight * (desiredColors["light"][1] - desiredColors["dark"][1]))), Math.round(desiredColors["light"][2] - (weight * (desiredColors["light"][2] - desiredColors["dark"][2])))]
         output = "#" + colors[0].toString(16) + colors[1].toString(16) + colors[2].toString(16);
         return output;
@@ -86,8 +87,8 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
         Dark: dark,
         Light: light,
         Satellite: satellite,
-        Terrain: terrain,
-        TerrainRGB: terrainRGB
+        Terrain: terrain
+        // TerrainRGB: terrainRGB
     }
 
     var overlayMaps = {
