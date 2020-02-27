@@ -146,9 +146,10 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
             return div;
         };
 
+        legend.addTo(map);
+
         // Debugging Test Circle
         
-        // legend.addTo(map);
         // L.circle([35, -165], {
         //     fillOpacity: 0.75,
         //     stroke: false,
