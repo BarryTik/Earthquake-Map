@@ -148,6 +148,26 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
 
         legend.addTo(map);
 
+
+        // https://stackoverflow.com/questions/33767463/overlaying-a-text-box-on-a-leaflet-js-map
+        L.Control.textbox = L.Control.extend({
+            onAdd: function(map) {
+                
+            var text = L.DomUtil.create('div');
+            text.id = "info_text";
+            text.innerHTML = "<p>This visualization shows earthquakes over the last week as reported by the <a href='https://earthquake.usgs.gov/'>USGS</a>.</p><p>Circles show earthquakes, darker circles are higher magnitude. Lines show fault lines.</p> <p>Click on a circle to see information for that report.</p>"
+            return text;
+            },
+    
+            onRemove: function(map) {
+                // Nothing to do here
+            }
+        });
+        L.control.textbox = function(opts) { return new L.Control.textbox(opts);}
+        L.control.textbox({ position: 'bottomleft' }).addTo(map);
+
+        
+
         // Debugging Test Circle
         
         // L.circle([35, -165], {
